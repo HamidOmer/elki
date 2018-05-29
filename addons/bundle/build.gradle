@@ -51,7 +51,7 @@ jar {
   }
 }
 
-packageSources.from(configurations.doc)
+sourceJar.from(configurations.doc)
 
 javadoc {
   source configurations.doc
@@ -113,3 +113,13 @@ shadowJar {
 }
 
 assemble.dependsOn shadowJar
+artifacts.archives shadowJar
+
+// Maven publishing plugin
+publishing {
+  publications {
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
+    }
+  }
+}
